@@ -52,4 +52,9 @@ public class Tarefa {
     public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
+
+    public void finalizar() {
+        this.concluida = true;
+    }
+
 }

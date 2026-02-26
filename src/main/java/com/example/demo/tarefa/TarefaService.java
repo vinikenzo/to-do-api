@@ -44,6 +44,12 @@ public class TarefaService {
                 .map(DadosDetalhamentoTarefa::new);
     }
 
+    public void finalizarTarefa(Long id){
+        Tarefa tarefa = tarefaRepository.getReferenceById(id);
+        tarefa.finalizar();
+    }
+
+
 
 
 

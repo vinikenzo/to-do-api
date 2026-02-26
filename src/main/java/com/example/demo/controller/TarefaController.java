@@ -6,7 +6,6 @@ import com.example.demo.tarefa.TarefaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -55,6 +54,17 @@ public class TarefaController {
         var tarefas = tarefaService.listarTarefasConcluidas(paginacao);
         return ResponseEntity.ok(tarefas);
     }
+
+    @PatchMapping("/{id}/concluir")
+    @Transactional
+    public ResponseEntity concluirTarefa(@PathVariable Long id){
+        tarefaService.finalizarTarefa(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
+
 
 
 }
