@@ -27,6 +27,11 @@ public class TarefaService {
         return tarefas;
     }
 
+    public DadosDetalhamentoTarefa listarTarefa(Long id){
+        var tarefa = tarefaRepository.getReferenceById(id);
+        return new DadosDetalhamentoTarefa(tarefa);
+    }
+
     public Tarefa cadastrarTarefa(@Valid DadosCadastroTarefa dados){
         var tarefa = new Tarefa(dados);
         tarefaRepository.save(tarefa);

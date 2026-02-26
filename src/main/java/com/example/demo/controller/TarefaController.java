@@ -33,6 +33,12 @@ public class TarefaController {
         return ResponseEntity.ok(tarefas);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity listarTarefa(@PathVariable Long id){
+        var dadosTarefa = tarefaService.listarTarefa(id);
+        return ResponseEntity.ok(dadosTarefa);
+    }
+
     @PostMapping
     @Transactional
     public ResponseEntity cadastrarTarefa(@RequestBody @Valid DadosCadastroTarefa dados, UriComponentsBuilder uriComponentsBuilder){
@@ -68,6 +74,8 @@ public class TarefaController {
         tarefaService.excluirTarefa(id);
         return ResponseEntity.noContent().build();
     }
+
+
 
 
 
