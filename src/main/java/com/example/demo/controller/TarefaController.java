@@ -62,7 +62,12 @@ public class TarefaController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluirTarefa(@PathVariable Long id){
+        tarefaService.excluirTarefa(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 

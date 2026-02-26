@@ -49,6 +49,9 @@ public class TarefaService {
         tarefa.finalizar();
     }
 
+    public void excluirTarefa(Long id){
+        tarefaRepository.deleteById(id);
+    }
 
 
 
