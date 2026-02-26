@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity()
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Table(name = "tarefas")
@@ -29,6 +28,9 @@ public class Tarefa {
         this.descricao = dados.descricao();
         this.concluida = false;
         this.dataCriacao = LocalDateTime.now();
+    }
+
+    public Tarefa() {
     }
 
     public Long getId() {

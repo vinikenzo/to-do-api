@@ -2,10 +2,16 @@ package com.example.demo.tarefa;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TarefaService {
@@ -13,11 +19,24 @@ public class TarefaService {
     @Autowired
     private TarefaRepository tarefaRepository;
 
+    public List<DadosDetalhamentoTarefa> listarTarefas(){
+        List<Tarefa> lista = tarefaRepository.findAll();
+        var tarefas = lista.stream()
+                .map(t -> new DadosDetalhamentoTarefa(t.getId(), t.getTitulo(), t.getDescricao(), t.getConcluida(), t.getDataCriacao()))
+                .collect(Collectors.toList());
+        return tarefas;
+    }
+
     public Tarefa cadastrarTarefa(@Valid DadosCadastroTarefa dados){
         var tarefa = new Tarefa(dados);
         tarefaRepository.save(tarefa);
         return tarefa;
-
     }
+
+
+
+
+
+
 
 }

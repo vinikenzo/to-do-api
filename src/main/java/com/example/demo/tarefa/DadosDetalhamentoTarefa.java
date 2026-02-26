@@ -1,6 +1,7 @@
 package com.example.demo.tarefa;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record DadosDetalhamentoTarefa(
         Long id,
@@ -12,4 +13,6 @@ public record DadosDetalhamentoTarefa(
     public DadosDetalhamentoTarefa(Tarefa tarefa) {
         this(tarefa.getId(), tarefa.getTitulo(), tarefa.getDescricao(), tarefa.getConcluida(), tarefa.getDataCriacao());
     }
+
+
 }

@@ -5,6 +5,7 @@ import com.example.demo.tarefa.DadosDetalhamentoTarefa;
 import com.example.demo.tarefa.TarefaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +13,20 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/tarefas")
+@RequiredArgsConstructor
 public class TarefaController {
 
-    @Autowired
     private TarefaService tarefaService;
 
+    public TarefaController(TarefaService tarefaService) {
+        this.tarefaService = tarefaService;
+    }
+
     @GetMapping
-    public String helloworld(){
-        return "hello world";
+    public ResponseEntity listarTarefas(){
+        var tarefas = tarefaService.listarTarefas();
+
+        return ResponseEntity.ok(tarefas);
     }
 
     @PostMapping
