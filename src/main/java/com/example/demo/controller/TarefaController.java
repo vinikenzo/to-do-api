@@ -7,9 +7,14 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+
 
 @RestController
 @RequestMapping("/tarefas")
@@ -36,6 +41,19 @@ public class TarefaController {
         var uri = uriComponentsBuilder.path("/tarefas/{id}").buildAndExpand(tarefa.getId()).toUri();
         return ResponseEntity.created(uri).body(new DadosDetalhamentoTarefa(tarefa));
 
+    }
+
+    @GetMapping("/pendentes")
+    public ResponseEntity<Page<DadosDetalhamentoTarefa>> listarTarefasPendentes(@PageableDefault Pageable paginacao){
+        var tarefas = tarefaService.listarTarefasPendentes(paginacao);
+        return ResponseEntity.ok(tarefas);
+
+    }
+
+    @GetMapping("/concluidas")
+    public ResponseEntity<Page<DadosDetalhamentoTarefa>> listarTarefasConcluidas(@PageableDefault Pageable paginacao){
+        var tarefas = tarefaService.listarTarefasConcluidas(paginacao);
+        return ResponseEntity.ok(tarefas);
     }
 
 

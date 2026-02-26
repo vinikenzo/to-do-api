@@ -33,7 +33,16 @@ public class TarefaService {
         return tarefa;
     }
 
+    public Page<DadosDetalhamentoTarefa> listarTarefasPendentes(@PageableDefault Pageable paginacao){
+        return tarefaRepository.findAllByConcluidaFalse(paginacao)
+                .map(DadosDetalhamentoTarefa::new);
 
+    }
+
+    public Page<DadosDetalhamentoTarefa> listarTarefasConcluidas(@PageableDefault Pageable paginacao){
+        return tarefaRepository.findAllByConcluidaTrue(paginacao)
+                .map(DadosDetalhamentoTarefa::new);
+    }
 
 
 
