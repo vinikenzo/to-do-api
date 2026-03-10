@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.tarefa.DadosCadastroTarefa;
 import com.example.demo.tarefa.DadosDetalhamentoTarefa;
 import com.example.demo.tarefa.TarefaService;
+import com.example.demo.usuario.Usuario;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -41,8 +43,8 @@ public class TarefaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrarTarefa(@RequestBody @Valid DadosCadastroTarefa dados, UriComponentsBuilder uriComponentsBuilder){
-        var tarefa = tarefaService.cadastrarTarefa(dados);
+    public ResponseEntity cadastrarTarefa(@RequestBody @Valid DadosCadastroTarefa dados, UriComponentsBuilder uriComponentsBuilder,@AuthenticationPrincipal Usuario usuario){
+        var tarefa = tarefaService.cadastrarTarefa(dados, usuario);
         var uri = uriComponentsBuilder.path("/tarefas/{id}").buildAndExpand(tarefa.getId()).toUri();
         return ResponseEntity.created(uri).body(new DadosDetalhamentoTarefa(tarefa));
 

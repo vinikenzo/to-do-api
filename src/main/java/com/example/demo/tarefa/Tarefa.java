@@ -1,5 +1,6 @@
 package com.example.demo.tarefa;
 
+import com.example.demo.usuario.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -9,9 +10,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity()
+@Entity
 @AllArgsConstructor
-@Getter
+
 @Table(name = "tarefas")
 public class Tarefa {
     @Id
@@ -21,13 +22,17 @@ public class Tarefa {
     private String descricao;
     private Boolean concluida;
     private LocalDateTime dataCriacao;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
 
-    public Tarefa(DadosCadastroTarefa dados) {
+    public Tarefa(DadosCadastroTarefa dados, Usuario usuario) {
         this.titulo = dados.titulo();
         this.descricao = dados.descricao();
         this.concluida = false;
         this.dataCriacao = LocalDateTime.now();
+        this.usuario = usuario;
     }
 
     public Tarefa() {

@@ -1,5 +1,6 @@
 package com.example.demo.tarefa;
 
+import com.example.demo.usuario.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,8 +31,8 @@ public class TarefaService {
         return new DadosDetalhamentoTarefa(tarefa);
     }
 
-    public Tarefa cadastrarTarefa(@Valid DadosCadastroTarefa dados){
-        var tarefa = new Tarefa(dados);
+    public Tarefa cadastrarTarefa(@Valid DadosCadastroTarefa dados, Usuario usuario){
+        var tarefa = new Tarefa(dados, usuario);
         tarefaRepository.save(tarefa);
         return tarefa;
     }
