@@ -31,4 +31,13 @@ public class UsuarioController {
         var usuarios = usuarioService.listarUsuarios();
         return ResponseEntity.ok(usuarios);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity listarPorId(@PathVariable Long id){
+        var usuario = usuarioService.listarPorId(id);
+        var dadosUsuario = new DadosDetalhamentoUsuario(usuario);
+        return ResponseEntity.ok(dadosUsuario);
+    }
+
+
 }

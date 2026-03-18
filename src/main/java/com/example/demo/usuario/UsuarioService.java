@@ -29,4 +29,9 @@ public class UsuarioService {
                 .collect(Collectors.toList());
         return usuarios;
     }
+
+    public Usuario listarPorId(Long id){
+        var usuario = usuarioRepository.getReferenceById(id);
+        return usuario;
+    }
 }
