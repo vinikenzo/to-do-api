@@ -44,4 +44,11 @@ public class UsuarioController {
         return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
     }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id){
+        usuarioService.excluirUsuario(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

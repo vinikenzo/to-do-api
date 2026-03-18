@@ -46,4 +46,8 @@ public class UsuarioService {
         usuario.atualizar(dados, senhaEncriptada);
         return usuario;
     }
+
+    public void excluirUsuario(Long id){
+        usuarioRepository.deleteById(id);
+    }
 }
