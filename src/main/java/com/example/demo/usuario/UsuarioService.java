@@ -1,6 +1,7 @@
 package com.example.demo.usuario;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,12 +12,16 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    private final PasswordEncoder encriptador;
+
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder encriptador) {
         this.usuarioRepository = usuarioRepository;
+        this.encriptador = encriptador;
     }
 
     public Usuario cadastrarUsuario(DadosCadastroUsuario dados){
-        var usuario = new Usuario(dados);
+        var senhaCriptografada = encriptador.encode(dados.senha());
+        var usuario = new Usuario(dados, senhaCriptografada);
         usuarioRepository.save(usuario);
         return usuario;
 
@@ -36,8 +41,9 @@ public class UsuarioService {
     }
 
     public Usuario atualizarUsuario(DadosAtualizacaoUsuario dados){
+        var senhaEncriptada = encriptador.encode(dados.senha());
         var usuario = usuarioRepository.getReferenceById(dados.id());
-        usuario.atualizar(dados);
+        usuario.atualizar(dados, senhaEncriptada);
         return usuario;
     }
 }

@@ -30,9 +30,11 @@ public class Usuario implements UserDetails {
     public Usuario() {
     }
 
-    public Usuario(DadosCadastroUsuario dados) {
+
+
+    public Usuario(DadosCadastroUsuario dados, String senhaCriptografada) {
         this.login = dados.login();
-        this.senha = dados.senha();
+        this.senha = senhaCriptografada;
     }
 
     public Long getId() {
@@ -83,12 +85,12 @@ public class Usuario implements UserDetails {
         return true;
     }
 
-    public void atualizar(DadosAtualizacaoUsuario dados) {
+    public void atualizar(DadosAtualizacaoUsuario dados, String senhaEncriptada) {
         if(dados.login() != null){
             this.login = dados.login();
         }
         if(dados.senha() != null){
-            this.senha = dados.senha();
+            this.senha = senhaEncriptada;
         }
     }
 }
