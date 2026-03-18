@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.usuario.DadosCadastroUsuario;
-import com.example.demo.usuario.DadosDetalhamentoUsuario;
-import com.example.demo.usuario.Usuario;
-import com.example.demo.usuario.UsuarioService;
+import com.example.demo.usuario.*;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +37,11 @@ public class UsuarioController {
         return ResponseEntity.ok(dadosUsuario);
     }
 
+    @PutMapping()
+    @Transactional
+    public ResponseEntity atualizar(@RequestBody DadosAtualizacaoUsuario dados){
+        var usuario = usuarioService.atualizarUsuario(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
+    }
 
 }

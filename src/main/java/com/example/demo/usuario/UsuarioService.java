@@ -34,4 +34,10 @@ public class UsuarioService {
         var usuario = usuarioRepository.getReferenceById(id);
         return usuario;
     }
+
+    public Usuario atualizarUsuario(DadosAtualizacaoUsuario dados){
+        var usuario = usuarioRepository.getReferenceById(dados.id());
+        usuario.atualizar(dados);
+        return usuario;
+    }
 }
