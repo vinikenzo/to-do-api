@@ -31,7 +31,6 @@ public class TarefaController {
     @GetMapping
     public ResponseEntity listarTarefas(){
         var tarefas = tarefaService.listarTarefas();
-
         return ResponseEntity.ok(tarefas);
     }
 

@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.security.DadosTokenJWT;
+import com.example.demo.security.TokenService;
 import com.example.demo.usuario.DadosAutenticacao;
+import com.example.demo.usuario.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +20,21 @@ public class AutenticacaoController {
 
     private final AuthenticationManager manager;
 
-    public AutenticacaoController(AuthenticationManager manager) {
+    private TokenService tokenService;
+
+    public AutenticacaoController(AuthenticationManager manager, TokenService tokenService) {
         this.manager = manager;
+        this.tokenService = tokenService;
     }
 
 
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados){
-        var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
-        var authentication = manager.authenticate(token);
+        var detalhesLogin = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
+        var authentication = manager.authenticate(detalhesLogin);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.gerarToken((Usuario)authentication.getPrincipal()) ;
+
+        return ResponseEntity.ok(new DadosTokenJWT(token));
     }
 }
